@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_emp_received_approval_wizard_form_id" model="ir.ui.view">
+        <field name="name">received.assets.approval.wizard.form</field>
+        <field name="model">employee.received.assets.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Assets Approval">
+                <sheet>
+                    <group>
+                        <field name="remark"/>
+                    </group>
+                    <notebook>
+                        <page string="Received Assets">
+                            <field name="equipment_ids" widget="one2many_list">
+                                <tree string="Received Assets Approval" editable="bottom">
+                                    <control>
+                                        <create string=" "/>
+                                    </control>
+                                    <field name="remove_selected_data" string="Select Asset"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="password_of_device" readonly="0"/>
+                                    <field name="assign_date" readonly="1"/>
+                                    <field name="sequence" readonly="1"/>
+                                    <field name="serial_no" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+<!--                    <group>-->
+<!--                    <group>-->
+<!--                        <field name="signature" widget="signature"/>-->
+<!--                    </group>-->
+<!--                    </group>-->
+                    <footer>
+                        <button name="received_assets_approval" string="Asset Received Approval" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="job_position_report_tmpl">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>table { width: 100%; text-align: center; } #job_data th, #job_data td { border:
+                            1px
+                            solid black; padding: 5px; } #job_data th h5 { font-weight: 700; }
+                        </style>
+                        <center>
+
+                            <div>
+                                <h3 style="font-size:25px !important;font-weight: 700;">
+                                    Job Position Report (
+                                    <t t-esc="data['date_range']"/>
+                                    )
+                                </h3>
+                            </div>
+                            <br/>
+                            <div>
+                                <br/>
+                                <br/>
+                                <table id="job_data">
+                                    <tr>
+                                        <th>
+                                            <h5>Create Date</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Job Position</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Department</h5>
+                                        </th>
+                                        <th>
+                                            <h5>No Of Recruitment</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Employee Type</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Recruiter</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Status</h5>
+                                        </th>
+                                    </tr>
+                                    <tr t-foreach='data["job_list"]' t-as="job">
+                                        <td>
+                                            <h5>
+                                                <t t-esc="job.create_date.strftime('%Y-%m-%d')"/>
+<!--                                                <span t-field="job.create_date.strftime('%Y-%m-%d')"/>-->
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.department_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.no_of_recruitment"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.contract_type_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.user_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="job.state"/>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+                            </div>
+                        </center>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_job_position_report" model="report.paperformat">
+            <field name="name">Job Position</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">48</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_job_position_pdf_reports" model="ir.actions.report">
+            <field name="name">JOB Position PDF Report</field>
+            <field name="model">job.position.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">recruitment_approval_flow.job_position_report_tmpl</field>
+            <field name="report_file">recruitment_approval_flow.job_position_report_tmpl</field>
+            <field name="binding_model_id" ref="model_job_position_report"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_job_position_report"/>
+        </record>
+
+    </data>
+</odoo>

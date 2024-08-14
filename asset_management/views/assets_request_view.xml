@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="assets_request_action" model="ir.actions.act_window">
+        <field name="name">Assets Request</field>
+        <field name="res_model">asset.request</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <record id="assetrequestformview" model="ir.ui.view">
+        <field name="name">asset request form view</field>
+        <field name="model">asset.request</field>
+        <field name="arch" type="xml">
+            <form string="Asset Request">
+                <header>
+                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+                    <button string="validate" name="action_approve" type="object" class="oe_highlight"
+                            states='manager_approval'
+                            groups="asset_management.asset_admin_group"/>
+                    <button string="Manager Approval" name="action_manager_approval" type="object"  attrs="{'invisible': ['|',('state', 'not in', ['confirm']),('hide_manager_approve_btn','=',True)]}"
+                            groups="asset_management.asset_admin_group,asset_management.assets_manager_group"
+                            class="oe_highlight"/>
+                    <button string="Refuse" name="action_refuse" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', 'not in', ['confirm','manager_approval','validate']),('hide_manager_approve_btn','=',True)]}"
+                            groups="asset_management.asset_admin_group,asset_management.assets_manager_group"/>
+                    <button string="Mark as Draft" name="action_draft" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['confirm', 'refuse'])]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="confirm,manager_approval,validate"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" attrs="{'readonly': [('state', 'not in', ['draft'])]}" required="1"/>
+                    </group>
+                    <group>
+                        <field name="employee_id" readonly="1" force_save="1"/>
+                        <field name="hide_manager_approve_btn" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="assets_manager_remark" groups="asset_management.asset_admin_group" invisible="1"/>
+                    </group>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                 </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="assetrequesttreeview" model="ir.ui.view">
+        <field name="name">asset request tree view</field>
+        <field name="model">asset.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="state"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="asset_request_search_view" model="ir.ui.view">
+        <field name="name">asset request tree search view</field>
+        <field name="model">asset.request</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name='name' filter_domain="[('name', 'ilike', self)]" string="Request"/>
+                <field name='employee_id' filter_domain="[('employee_id', 'ilike', self)]" string="Employee"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Employee" name='group_by_employee_id' context="{'group_by':'employee_id'}"/>
+                    <filter string="State" name='state' context="{'group_by':'state'}"/>
+                    <filter name="active" string="Archive" domain="[('active','=',True)]" help="Show active asset request"/>
+                    <filter name="inactive" string="Unarchive" domain="[('active','=',False)]" help="Show inactive asset request"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

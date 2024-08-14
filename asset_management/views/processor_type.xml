@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="processor_type_tree" model="ir.ui.view">
+            <field name="name">processor_type_tree</field>
+            <field name="model">processor.type</field>
+            <field name="arch" type="xml">
+                <tree string="Processor type" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="processor_type_action" model="ir.actions.act_window">
+            <field name="name">Processor Type</field>
+            <field name="res_model">processor.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="processor_type_menu"
+                  name="Processor Type"
+                  parent="maintenance.menu_maintenance_configuration"
+                  action="processor_type_action"
+                  groups="asset_management.asset_admin_group"
+        />
+    </data>
+</odoo>

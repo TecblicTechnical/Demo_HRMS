@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_equipment_view_custom_form_inherit_id" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="free,allocated"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <group>
+                    <field name="sequence" readonly="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="b2b_company_id"
+                       attrs="{'readonly': [('hide_group_for_user', '=', True)],'required':True}"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="emp_remark"/>
+                <field name="is_mail_send" invisible="1"/>
+                <field name="hide_group_for_user" invisible="1"/>
+                <field name="remove_selected_data" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="hard_copy_form_no" attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+                <field name="old_asset_code" invisible="1" attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+                <field name="operating_system_id" attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='warranty_date']" position="after">
+                <field name="device_company"
+                       attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+                <field name="ram"
+                       attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+                <field name="warranty_period"
+                       attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='serial_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="password_of_device" attrs="{'required': [('main_category', 'in', [%(asset_management.processing_category)d])]}"/>
+                <field name="main_category" invisible="1"/>
+                <field name="equipment_state" attrs="{'readonly': [('hide_group_for_user', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='scrap_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">Company Equipment Name</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Invoice" name="invoice">
+                    <group>
+                        <group>
+                            <field name="invoice_number"/>
+                            <field name="invoice_date"/>
+                            <field name="hsn"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='serial_no']" position="after">
+                <field name="processor_type" />
+            </xpath>
+            <xpath expr="//field[@name='warranty_date']" position="after">
+                <field name="device_generation"/>
+            </xpath>
+
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)]}</attribute>
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='assign_date']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)],'required':True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='equipment_assign_to']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)],'invisible': ['|',
+                    ('equipment_assign_to', '=', 'department'), ('equipment_assign_to', '=', False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)],'invisible': ['|',
+                    ('equipment_assign_to', '=', 'employee'), ('equipment_assign_to', '=', False)]}
+                </attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='location']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='technician_user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='description']" position="attributes">
+                <attribute name="attrs">{'invisible': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='maintenance']" position="attributes">
+                <attribute name="attrs">{'invisible': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='product_information']" position="attributes">
+                <attribute name="attrs">{'invisible': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[last()]" position="attributes">
+                <attribute name="attrs">{'invisible': [('hide_group_for_user', '=', True)]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="maintenance_view_tree_inherit_custom" model="ir.ui.view">
+        <field name="name">maintenance.view.tree.inherit.custom</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='technician_user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='serial_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='serial_no']" position="after">
+                <field name="sequence"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="b2b_company_id"/>
+                <field name="state"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance_view_search_inherit_custom" model="ir.ui.view">
+        <field name="name">maintenance.view.search.inherit.custom</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="filter_domain">[ '|', '|', '|',
+                    ('name', 'ilike', self),
+                    ('model', 'ilike', self),
+                    ('sequence', 'ilike', self),
+                    ('b2b_company_id.name', 'ilike', self),
+                    ('sequence', 'ilike', self)
+                    ]
+                </attribute>
+            </xpath>
+
+            <xpath expr="//filter[@name='available']" position="after">
+                <field string="Sequence" name="sequence" filter_domain="[('sequence', 'ilike', self)]"/>
+                <field string="B2B Company" name="b2b_company_id" filter_domain="[('b2b_company_id', 'ilike', self)]"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string='Equipment State' name="equipment_state" domain="[]"
+                        context="{'group_by': 'equipment_state'}"/>
+                <filter string='B2B Company' name="b2b_company_id" context="{'group_by': 'b2b_company_id'}"/>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance_view_kanban_inherit_custom" model="ir.ui.view">
+        <field name="name">maintenance.view.kanban.inherit.custom</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="sequence"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="maintenance.hr_equipment_action" model="ir.actions.act_window">
+        <field name="name">Equipments</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new equipment
+            </p>
+            <p>
+                Track equipments and link it to an employee or department.
+                You will be able to manage allocations, issues and maintenance of your equipment.
+            </p>
+        </field>
+    </record>
+</odoo>

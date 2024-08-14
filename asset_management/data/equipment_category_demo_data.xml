@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="cpu_category" model="maintenance.equipment.category">
+            <field name="name">CPU</field>
+        </record>
+        <record id="laptop_category" model="maintenance.equipment.category">
+            <field name="name">Laptop</field>
+        </record>
+        <record id="mouse_category" model="maintenance.equipment.category">
+            <field name="name">Mouse</field>
+        </record>
+        <record id="keyboard_category" model="maintenance.equipment.category">
+            <field name="name">Keyboard</field>
+        </record>
+        <record id="headphone_category" model="maintenance.equipment.category">
+            <field name="name">Headphone</field>
+        </record>
+        <record id="earphone_category" model="maintenance.equipment.category">
+            <field name="name">Earphone</field>
+        </record>
+        <record id="screen_category" model="maintenance.equipment.category">
+            <field name="name">Screen</field>
+        </record>
+        <record id="wire_category" model="maintenance.equipment.category">
+            <field name="name">Wires</field>
+        </record>
+        <record id="tablet_category" model="maintenance.equipment.category">
+            <field name="name">Tablet</field>
+        </record>
+        <record id="peripheral_main_category" model="main.asset.category">
+            <field name="name">Peripheral Device</field>
+        </record>
+        <record id="cable_main_category" model="main.asset.category">
+            <field name="name">Cables</field>
+        </record>
+        <record id="processing_category" model="main.asset.category">
+            <field name="name">Processing Device</field>
+        </record>
+        <record id="b2b_category_tag" model="res.partner.category">
+            <field name="name">B2B</field>
+        </record>
+    </data>
+</odoo>

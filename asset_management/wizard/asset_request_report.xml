@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="emp_asset_request_report_form_view" model="ir.ui.view">
+        <field name="name">asset.request.report.form.view</field>
+        <field name="model">asset.request.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="employee_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_asset_request_report_xls" string="Print XLS" type="object" class="btn-primary"/>
+                    <button name="print_asset_request_report_pdf" string="Print PDF" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_request_report" model="ir.actions.act_window">
+        <field name="name">Asset Request Report</field>
+        <field name="res_model">asset.request.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="emp_asset_request_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="hr_recruitment.menu_hr_recruitment_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_admin_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
+        </record>
+        <menuitem name="Job Position Report" id="hr_job_position_report_menus" parent="hr_recruitment.report_hr_recruitment"  action="action_job_position_report" groups="hr_recruitment.group_hr_recruitment_manager"/>
+        <menuitem name="Job Applictions Report" id="hr_job_applicant_report_menus" parent="hr_recruitment.report_hr_recruitment"  action="action_job_application_report" groups="hr_recruitment.group_hr_recruitment_manager"/>
+    </data>
+</odoo>

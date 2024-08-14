@@ -1,0 +1,119 @@
+<odoo>
+    <data>
+        <record id="send_maintenance_request_mail" model="mail.template">
+            <field name="name">Maintenance Request</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc">{{}}</field>
+            <field name="subject">Maintenance Request</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello Sir/Ma'am,
+                        <br/>
+                        <br/>
+                        My name is  <t t-out="object.employee_id.name"/>  and I have sent you a Maintenance request with the following
+                        reason: <t t-out="object.name"/>,
+                        <br/>
+                        <p>Your Asset Details:</p>
+                        <p>Asset Name: <t t-out="object.equipment_id.name"/> </p>
+                        <p>Asset Code: <t t-out="object.asset_seq"/> </p>
+                        <p>Asset Assign Date: <t t-out="object.asset_assign_date"/></p>
+                        <br/>
+
+                        Thank you
+                        <br/>
+                        <t t-out="object.employee_id.name"/>,
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="send_maintenance_request_refuse_mail" model="mail.template">
+            <field name="name">Maintenance Request Refuse</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc">{{}}</field>
+            <field name="subject">Maintenance Request Refuse</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello <t t-out="object.employee_id.name"/>,
+                        <br/>
+                        <br/>
+                        We regret to inform you that your maintenance request is refuse.
+                         <br/>
+                        <p>Your Asset Details:</p>
+                        <p>Asset Name: <t t-out="object.equipment_id.name"/> </p>
+                        <p>Asset Code: <t t-out="object.asset_seq"/> </p>
+                        <p>Asset Assign Date: <t t-out="object.asset_assign_date"/></p>
+                        <br/>
+                        Thank you
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+           <record id="assets_maintenance_request_manager_approval_mail" model="mail.template">
+            <field name="name">Maintenance Request Approved By Manager</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc">{{}}</field>
+            <field name="subject">Maintenance Request Approved By Manager</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello
+                        <t t-out="object.employee_id.name"/>,
+                        <br/>
+                        <br/>
+                        Your assets request is approved by Manager.
+                        <br/>
+                        <p>Your Asset Details:</p>
+                        <p>Asset Name: <t t-out="object.equipment_id.name"/></p>
+                        <p>Asset Code: <t t-out="object.asset_seq"/></p>
+                        <p>Asset Assign Date: <t t-out="object.asset_assign_date"/></p>
+                        <br/>
+                        Thank you
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="send_assets_maintenance_request_asset_manager_mail" model="mail.template">
+            <field name="name">Maintenance Request Approved By Asset Manager</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="subject">Maintenance Request Approved By Asset Manager</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello
+                        <t t-out="object.employee_id.name"/>,
+                        <br/>
+                        <br/>
+                        Your assets request is approved by Asset Manager.
+                        <br/>
+                        <p>Your Asset Details:</p>
+                        <p>Asset Name: <t t-out="object.equipment_id.name"/></p>
+                        <p>Asset Code: <t t-out="object.asset_seq"/></p>
+                        <p>Asset Assign Date: <t t-out="object.asset_assign_date"/></p>
+                        <br/>
+                        Thank you
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>

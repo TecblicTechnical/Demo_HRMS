@@ -1,0 +1,70 @@
+<odoo>
+        <data>
+         <record id="send_job_position_opening_request_mail" model="mail.template">
+            <field name="name">Job Position Opening</field>
+            <field name="model_id" ref="hr.model_hr_job"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc"> </field>
+            <field name="subject">Approval Request for Job Position {{object.name}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 16px;">
+                        Hello,
+                        <br/>
+                        <p>A new job position requires your approval:</p>
+                        <p><strong>Job Position:</strong> <t t-out="object.name"/></p>
+                        <p><strong>Description:</strong> <t t-out="object.description"/></p>
+                        <p><strong>Requested By:</strong>  <t t-out="object.create_uid.name"/></p>
+                        <p>Please review and approve or reject the request.</p>
+                        Thank you.
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="job_position_approved_mail" model="mail.template">
+            <field name="name">Job Position Approved</field>
+            <field name="model_id" ref="hr.model_hr_job"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc"> </field>
+            <field name="subject"> Job Position {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 16px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 16px;">
+                         Hello,
+                        <br/>
+                        <p>Your request for the job position <strong><t t-out="object.name"/></strong> has been approved.</p>
+                        Thank you.
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="job_position_refused_mail" model="mail.template">
+            <field name="name">Job Position Rejected</field>
+            <field name="model_id" ref="hr.model_hr_job"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc"> </field>
+            <field name="subject">Job Position {{object.name}} Rejected</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 16px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 16px;">
+                        Hello
+                        <br/>
+                        <p>Your request for the job position <strong><t t-out="object.name"/></strong> has been rejected.</p>
+                        Thank you
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        </data>
+</odoo>

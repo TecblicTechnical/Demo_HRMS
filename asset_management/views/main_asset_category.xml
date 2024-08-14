@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="main_asset_category_tree" model="ir.ui.view">
+            <field name="name">main_asset_category_tree</field>
+            <field name="model">main.asset.category</field>
+            <field name="arch" type="xml">
+                <tree string="Device Ram" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="main_asset_category_action" model="ir.actions.act_window">
+            <field name="name">Main Asset Category</field>
+            <field name="res_model">main.asset.category</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+
+    </data>
+</odoo>

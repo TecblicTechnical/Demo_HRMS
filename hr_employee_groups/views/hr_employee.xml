@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_employee_form_view_inherits" model="ir.ui.view">
+        <field name="name">hr employee form view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Upload Document" name="upload_document">
+                   <field name="upload_document_ids">
+                       <tree editable="bottom">
+                           <field name="name"/>
+                           <field name="document_name" invisible="1"/>
+                           <field name="document_no" />
+                           <field name="document_files" filename="document_name" widget="binary"/>
+                       </tree>
+                   </field>
+                </page>
+                <page string="Job History" name="job_history">
+                   <field name="job_history_ids">
+                       <tree editable="bottom">
+                           <field name="name"/>
+                           <field name="position"/>
+                           <field name="start_date"/>
+                           <field name="end_date"/>
+                           <field name="experience"/>
+                           <field name="description"/>
+                       </tree>
+                   </field>
+               </page>
+            </xpath>
+             <xpath expr="//group[@name='identification_group']" position="inside">
+                <field name="uan_number"/>
+                <field name="bank_ac_no"/>
+                <field name="bank_name"/>
+                <field name="bank_ifsc_code"/>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="employee_period_duration"
+                       attrs="{'invisible':[('employee_period_type','not in',('trainee'))],'required':[('employee_period_type','in',('trainee'))]}"/>
+                <field name="employee_probabtion_period_duration"
+                       attrs="{'invisible':[('employee_period_type','not in',('probation'))],'required':[('employee_period_type','in',('probation'))]}"/>
+                <field name="employee_period_type"/>
+                <field name="joining_date" required="1" options="{'datepicker': {'warn_future': true}}"/>
+                <field name="completion_date"
+                       attrs="{'required':[('employee_period_type','in',('trainee'))]}"/>
+                <field name="probabtion_completion_date"
+                        attrs="{'required':[('employee_period_type','in',('probation'))]}"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="project_department_id" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//group[@name='active_group']" position="inside">
+                <field name="is_permanent_emp" readonly="0"/>
+            </xpath>
+            <xpath expr="//field[@name='country_of_birth']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='managers']" position="after">
+                <group name="total_experience" string="Total Experience">
+                    <field name='career_start_date'/>
+                    <field name="total_experience"/>
+                </group>
+            </xpath>
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button name="%(hr_holidays.act_hr_employee_holiday_request)d"
+                        type="action" class="oe_stat_button" icon="fa-calendar"
+                        title="Remaining Paid Leaves">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Paid Leaves Balance</span>
+                        <span class="o_stat_text">
+                            <field name="paid_leave_balance"/>
+                            Leaves
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="maintenance_request_view_custom_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.request.form.inherit</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_manager_approve_btn', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='schedule_date']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_manager_approve_btn', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='duration']" position="attributes">
+                <attribute name="attrs">{'readonly': [('hide_manager_approve_btn', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='equipment_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="asset_seq" invisible="1"/>
+                <field name="hide_manager_approve_btn" invisible="1"/>
+                <field name="active" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='archive_equipment_request']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='reset_equipment_request']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='kanban_state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="confirm,manager_approval,hr_approval,validate"/>
+                </header>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+                <button string="validate" name="action_approve" type="object" class="oe_highlight"
+                        states='manager_approval'
+                        groups="asset_management.asset_admin_group"/>
+                <button string="Manager Approval" name="action_manager_approval" type="object"
+                        attrs="{'invisible': ['|',('state', 'not in', ['confirm']),('hide_manager_approve_btn','=',True)]}"
+                        groups="asset_management.asset_admin_group,asset_management.assets_manager_group"
+                        class="oe_highlight"/>
+                <button string="Refuse" name="action_refuse" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|',('state', 'not in', ['confirm','hr_approval','manager_approval','validate']),('hide_manager_approve_btn','=',True)]}"
+                        groups="asset_management.asset_admin_group,asset_management.assets_manager_group"/>
+                <button string="Mark as Draft" name="action_draft" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['confirm', 'refuse'])]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="groups">asset_management.asset_admin_group</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='email_cc']" position="after">
+                <field name="asset_assign_date"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance_request_view_tree_inherit_custom" model="ir.ui.view">
+        <field name="name">maintenance.request.view.tree.inherit.custom</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="asset_seq"/>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="state"/>
+                <field name="active" invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="maintenance_request_view_search_inherit_custom" model="ir.ui.view">
+        <field name="name">maintenance.request.view.search.inherit.custom</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search"/>
+        <field name="arch" type="xml">
+             <xpath expr="//group" position="inside">
+                <filter string='Maintenance State' name="Status" domain="[]" context="{'group_by': 'state'}"/>
+                <filter name="active" string="Archive" domain="[('active','=',True)]" help="Show active maintenance request"/>
+                <filter name="inactive" string="Unarchive" domain="[('active','=',False)]" help="Show inactive maintenance request"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="maintenance.hr_equipment_request_action" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">tree,form,pivot,graph,calendar</field>
+        <field name="context">{'default_user_id': uid}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new maintenance request
+            </p>
+            <p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_job_form_view_inherits" model="ir.ui.view">
+        <field name="name">hr job form view</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="options"> {'collaborative': false}</attribute>
+                    <attribute name="style"> width:100%</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                <header>
+                    <button string="Confirm" name="action_confirms" states="draft" type="object" class="oe_highlight"/>
+                    <button string="validate" name="action_approve" type="object" class="oe_highlight"
+                            states='confirm'
+                            groups="hr_recruitment.group_hr_recruitment_manager"/>
+<!--                    <button string="Manager Approval" name="action_manager_approval" type="object"-->
+<!--                            attrs="{'invisible': ['|',('state', 'not in', ['confirm']),('hide_approve_btn','=',True)]}"-->
+<!--                            groups="hr_recruitment.group_hr_recruitment_user,hr_recruitment.group_hr_recruitment_manager"-->
+<!--                            class="oe_highlight"/>-->
+                    <button string="Refuse" name="action_refuse" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', 'not in', ['confirm','validate']),('hide_approve_btn','=',True)]}"
+                            groups="hr_recruitment.group_hr_recruitment_user,hr_recruitment.group_hr_recruitment_manager"/>
+                    <button string="Mark as Draft" name="action_draft" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['confirm', 'refuse'])]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="confirm,validate"/>
+                    <field name="hide_approve_btn" invisible='1'/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_action_view_hr_job_form_id" model="ir.actions.act_window">
+        <field name="name">HR Job Form</field>
+        <field name="res_model">hr.job</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr.view_hr_job_form"/>
+    </record>
+    <record id="hr_job_kanban_view_inherits" model="ir.ui.view">
+        <field name="name">hr job form view</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr_recruitment.view_hr_job_kanban"/>
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="on_create">%(recruitment_approval_flow.hr_action_view_hr_job_form_id)d</attribute>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>
+
+

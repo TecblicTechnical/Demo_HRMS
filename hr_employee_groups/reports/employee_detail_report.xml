@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_employee_detail_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+            <div class="page">
+                <style>
+                    table {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    #emp_data th, #emp_data td {
+                        border: 1px solid black;
+                        padding: 5px;
+                        width:130px;
+                    }
+                    #emp_data th h5 {
+                        font-weight: 700;
+                        width:130px;
+                    }
+                </style>
+                <center>
+                    <div>
+                        <h3 style="font-weight: 700;">Employee Details</h3>
+                    </div>
+                    <br/>
+                    <div>
+                        <table id="emp_data">
+                            <tr>
+                                <th><h5>Employee Name</h5></th>
+                                <th><h5>Department</h5></th>
+                                <th><h5>Manager</h5></th>
+                                <th><h5>Mobile</h5></th>
+                                <th><h5>Email</h5></th>
+                                <th><h5>Completion Date</h5></th>
+                                <th><h5>Joining Date</h5></th>
+                                <th><h5>Total Experience</h5></th>
+                            </tr>
+                            <t t-if="employees_details">
+                                <t t-foreach="data['employees_details']" t-as="ed">
+                                    <tr>
+                                        <td><h5><t t-esc="ed.name"/></h5></td>
+                                        <td><h5><t t-esc="ed.department_id.name"/></h5></td>
+                                        <td><h5><t t-esc="ed.parent_id.name"/></h5></td>
+                                        <td><h5><t t-esc="ed.mobile_phone"/></h5></td>
+                                        <td><h5><t t-esc="ed.work_email"/></h5></td>
+                                        <td><h5>
+                                            <t t-if="ed.completion_date">
+                                                <t t-esc="ed.completion_date.strftime('%Y-%m-%d')"/>
+                                            </t>
+                                            <t t-else="">
+                                                N/A
+                                            </t>
+                                        </h5></td>
+                                        <td><h5>
+                                            <t t-if="ed.joining_date">
+                                                <t t-esc="ed.joining_date.strftime('%Y-%m-%d')"/>
+                                            </t>
+                                            <t t-else="">
+                                                N/A
+                                            </t>
+                                        </h5></td>
+                                        <td><h5><t t-esc="ed.total_experience"/></h5></td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <t t-if="not data['employees_details']">
+                                <tr>
+                                    <td colspan="5"><h5>No records found!</h5></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </center>
+            </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_employee_detail_report" model="ir.actions.report">
+        <field name="name">Employee Detail Report</field>
+        <field name="model">emp.detail.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_employee_groups.report_employee_detail_report</field>
+        <field name="report_file">hr_employee_groups.report_employee_detail_report</field>
+        <field name="binding_model_id" ref="model_emp_detail_report"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

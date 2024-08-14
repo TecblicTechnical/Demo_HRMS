@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_employee_public_form_view_inherits" model="ir.ui.view">
+        <field name="name">hr employee public form view</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Upload Document" name="upload_document">
+                   <field name="upload_document_ids">
+                       <tree editable="bottom">
+                           <field name="name"/>
+                           <field name="document_name" invisible="1"/>
+                           <field name="document_no" />
+                           <field name="document_files" filename="document_name" widget="binary"/>
+                       </tree>
+                   </field>
+                </page>
+                <page string="Job History" name="job_history">
+                   <field name="job_history_ids">
+                       <tree editable="bottom">
+                           <field name="name"/>
+                           <field name="position"/>
+                           <field name="start_date"/>
+                           <field name="end_date"/>
+                           <field name="experience"/>
+                           <field name="description"/>
+                       </tree>
+                   </field>
+                </page>
+                <page name="personal_information" string="Private Information">
+                    <group>
+                        <group>
+                            <label for="address_home_id" string="Private Address"/>
+                            <div>
+                                <div class="o_address_format" name="div_address">
+                                    <field name="address_home_id"/>
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"
+                                           options="{'no_open': True, 'no_quick_create': True}"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country"
+                                           options="{'no_open': True, 'no_quick_create': True}"/>
+                                </div>
+                            </div>
+                            <field name="private_email" string="Private Email"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="birthday"/>
+                            <field name="emergency_contact"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="project_department_id" widget="many2many_tags"/>
+                <field name="is_permanent_emp" invisible="1"/>
+                <field name="career_start_date"/>
+            </xpath>
+            <xpath expr="//div[@id='o_work_employee_main']" position="inside">
+                <group name="total_experience" string="Total Experience">
+                    <field name="total_experience"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                 <field name="user_id"/>
+            </xpath>
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button name="%(hr_holidays.act_hr_employee_holiday_request)d"
+                        type="action" class="oe_stat_button" icon="fa-calendar"
+                        title="Remaining Paid Leaves">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Paid Leaves Balance</span>
+                        <span class="o_stat_text">
+                            <field name="paid_leave_balance"/>
+                            Leaves
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

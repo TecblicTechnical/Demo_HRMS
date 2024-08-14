@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--    Asset  Management   Menu-->
+    <menuitem id="asset_main_menu" name="Assets Management"/>
+    <menuitem id="assets_request_menu" name="Assets Request" action="assets_request_action" parent="asset_main_menu"
+              sequence="1"/>
+    <menuitem id="asset_equipment_menu" name="Equipment" action="maintenance.hr_equipment_action"
+              parent="asset_main_menu" sequence="2"/>
+
+    <!--    Asset Management Configuration Menu-->
+    <menuitem id="asset_equipment_configuration_menu" name="Configuration" parent="asset_main_menu" sequence="5"
+              groups="asset_management.asset_admin_group"/>
+    <menuitem id="assets_category_menu" name="Equipment Categories" action="maintenance.hr_equipment_category_action"
+              parent="asset_equipment_configuration_menu" sequence="1"/>
+    <menuitem id="processor_type_menu" name="Processor Type" action="processor_type_action"
+              parent="asset_equipment_configuration_menu" sequence="2"/>
+    <menuitem id="generation_menu" name="Generation" action="generation_type_action"
+              parent="asset_equipment_configuration_menu" sequence="3"/>
+    <menuitem id="operating_system_menu" name="Operating System" action="operating_system_action"
+              parent="asset_equipment_configuration_menu" sequence="4"/>
+    <menuitem id="asset_b2b_menu" name="B2B Company" action="action_open_b2b_company_menu"
+              parent="asset_equipment_configuration_menu" sequence="5"/>
+    <menuitem id="asset_device_company_menu" name="Device Company" action="device_company_action"
+              parent="asset_equipment_configuration_menu" sequence="6"/>
+
+
+    <!--  maintenance  Asset Management Configuration Menu-->
+
+    <menuitem id="operating_system_menu"
+              name="Operating System"
+              parent="maintenance.menu_maintenance_configuration"
+              action="operating_system_action"
+              groups="asset_management.asset_admin_group"
+    />
+    <menuitem id="maintenance_asset_b2b_menu" name="B2B Company" action="action_open_b2b_company_menu"
+              parent="maintenance.menu_maintenance_configuration"
+              groups="asset_management.asset_admin_group"/>
+    <menuitem id="maintenance_asset_device_company_menu" name="Device Company" action="device_company_action"
+              parent="maintenance.menu_maintenance_configuration"
+              groups="asset_management.asset_admin_group"/>
+
+
+    <!--Asset Equipment Report-->
+    <menuitem id="asset_reporting_menu" name="Reporting" parent="asset_main_menu" sequence="4"
+              groups="asset_management.asset_admin_group"/>
+
+    <menuitem id="menu_asset_emp_equipment_report" name="Employee Equipment Report" parent="asset_reporting_menu"
+              groups="asset_management.asset_admin_group"
+              action="action_emp_equipment_report"/>
+    <menuitem id="menu_asset_request_report" name="Asset Request Report" parent="asset_reporting_menu"
+              groups="asset_management.asset_admin_group"
+              action="action_asset_request_report"/>
+
+    <!--Maintenance Equipment Report-->
+
+    <menuitem id="menu_emp_equipment_report" name="Employee Equipment Report" parent="maintenance.maintenance_reporting"
+              groups="asset_management.asset_admin_group"
+              action="action_emp_equipment_report" sequence="4"/>
+    <menuitem id="menu_emp_asset_maintenance_equipment_report" name="Maintenance Report"
+              parent="maintenance.maintenance_reporting"
+              groups="asset_management.asset_admin_group"
+              action="action_asset_maintenance_request_report" sequence="5"/>
+
+    <!--    Asset  Import Menu-->
+<!--    <menuitem id="import_asset_data_main_menu" name="Import Assets Data" action="import_asset_list_action"-->
+<!--              parent="asset_main_menu" sequence="4"-->
+<!--              groups="asset_management.asset_admin_group" />-->
+
+    <record id="maintenance.menu_m_dashboard" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+    <record id="maintenance.menu_maintenance_teams" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+    <record id="maintenance.menu_m_request_calendar" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+</odoo>
+

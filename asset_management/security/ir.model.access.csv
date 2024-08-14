@@ -1,0 +1,19 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+asset_request_id,asset_request_name,model_asset_request,,1,1,1,1
+maintenance.access_maintenance_system_user,equipment.request system user,maintenance.model_maintenance_request,base.group_user,1,0,1,0
+maintenance.manager_access_maintenance_system_user,equipment.request system user,maintenance.model_maintenance_request,,1,1,1,1
+maintenance.access_equipment_base_user,equipment.base.user,maintenance.model_maintenance_equipment,base.group_user,1,1,0,0
+maintenance.manager_access_equipment_admin_user,equipment.admin.user,maintenance.model_maintenance_equipment,asset_admin_group,1,1,1,1
+hr.model_hr_employee_id,hr.model_hr_employee_id,hr.model_hr_employee,asset_admin_group,1,1,1,1
+model_return_asset_details_id,model_return_asset_details_id,model_return_asset_details,,1,1,1,1
+access_import_asset_list,access_import_asset_list,model_import_asset_list,,1,1,1,1
+access_employee_received_assets_wizard,access_employee_received_assets_wizard,model_employee_received_assets_wizard,,1,1,1,1
+access_operating_system,access_operating_system,model_operating_system,,1,1,1,1
+access_device_company,access_device_company,model_device_company,,1,1,1,1
+access_main_asset_category,access_main_asset_category,model_main_asset_category,,1,1,1,1
+access_equipment_asset_report,access_equipment_asset_report,model_equipment_asset_report,,1,1,1,1
+access_asset_request_report,access_asset_request_report,model_asset_request_report,,1,1,1,1
+access_asset_maintenance_request_report,access_asset_maintenance_request_report,model_asset_maintenance_request_report,,1,1,1,1
+access_processor_type,access_processor_type,model_processor_type,,1,1,1,1
+access_generation_generation,access_generation_generation,model_generation_generation,,1,1,1,1
+

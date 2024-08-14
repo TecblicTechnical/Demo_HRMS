@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="paperformat_return_asset" model="report.paperformat">
+            <field name="name">Asset Return A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <template id="assets_return_report">
+            <t t-call="web.basic_layout">
+                <div>
+                    <style>
+                        table { width: 100%; text-align: center; } #assets_detail th, #assets_detail td { border:
+                        1px
+                        solid black; padding: 5px; } #assets_detail th h5 { font-weight: 700; }
+                    </style>
+                    <div>
+                        <center>
+                            <h2 style="font-weight: 700;">
+                                <t t-esc="request.env.user.company_id.name"/>
+                            </h2>
+                        </center>
+                    </div>
+                    <br/>
+                    <div>
+                        <center>
+                            <h2 style="font-weight: 700;">
+                                Employee Asset Return Checklist
+                            </h2>
+                        </center>
+                    </div>
+                    <br/>
+                    <div>
+                        <t t-foreach="docs" t-as="emp">
+                            <div style="font-size:20px !important;">
+                                <b>
+                                    <span>Employee Name:</span>
+                                </b>
+                                <span>
+                                    <t t-esc="emp.name"/>
+                                </span>
+                            </div>
+                            <br/>
+<!--                            <div style="font-size:20px !important;">-->
+<!--                                <b>-->
+<!--                                    <span>Employee Code:</span>-->
+<!--                                </b>-->
+<!--                                <span>-->
+<!--                                    <t t-esc="emp.emp_code"/>-->
+<!--                                </span>-->
+<!--                            </div>-->
+                            <br/>
+                            <div style="font-size:20px !important;">
+                                <b>
+                                    <span>Department:</span>
+                                </b>
+                                <span>
+                                    <t t-esc="emp.department_id.name"/>
+                                </span>
+                            </div>
+                            <br/>
+                            <div style="font-size:20px !important;">
+                                <b>
+                                    <span>Relieving Date:</span>
+                                </b>
+                                <span>
+                                    <t t-esc="emp.assets_return_date"/>
+                                </span>
+                            </div>
+                            <br/>
+                            <div style="float:left;font-size:20px !important;">
+                                <b>Return Assets List:</b>
+                            </div>
+                            <br/>
+                            <table id="assets_detail">
+                                <tr>
+                                    <th>
+                                        <h5>Equipment Name</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Sequence</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Password</h5>
+                                    </th>
+                                </tr>
+
+                                <t t-foreach="emp.equipment_ids" t-as="data">
+                                    <tr>
+                                        <td>
+                                            <h5>
+                                                <span t-field="data.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="data.sequence"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <t t-if="data.password_of_device">
+                                                    <span t-field="data.password_of_device"/>
+                                                </t>
+                                                <t t-else="">
+                                                    None
+                                                </t>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br/>
+                            <b>Extra Assets List:</b>
+                            <br/>
+                            <table id="assets_detail">
+                                <tr>
+                                    <td>
+                                        <h5>
+                                            <span t-field="emp.work_email"/>
+                                        </h5>
+                                    </td>
+
+                                    <td>
+                                        <h5>
+                                            <span t-field="emp.gmail_pswd"/>
+                                        </h5>
+                                    </td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            ID card-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            <t t-if="emp.id_card">-->
+<!--                                                <span t-field="emp.id_card"/>-->
+<!--                                            </t>-->
+<!--                                            <t t-else="">-->
+<!--                                                False-->
+<!--                                            </t>-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            Job Task Handover-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            <t t-if="emp.job_task_handover">-->
+<!--                                                <span t-field="emp.job_task_handover"/>-->
+<!--                                            </t>-->
+<!--                                            <t t-else="">-->
+<!--                                                False-->
+<!--                                            </t>-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            Diary-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+
+<!--                                    <td>-->
+<!--                                        <h5>-->
+<!--                                            <t t-if="emp.diary">-->
+<!--                                                <span t-field="emp.diary"/>-->
+<!--                                            </t>-->
+<!--                                            <t t-else="">-->
+<!--                                                False-->
+<!--                                            </t>-->
+<!--                                        </h5>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                            </table>
+                            <br/>
+                            <br/>
+                            <h4>
+                                <b>Note:</b>
+                            </h4>
+                            <p style="font-size:20px;">
+                                All the items must be returned to the HR/Admin Department and completed till the last
+                                day of working with Tecblic and before issuance of the Full and Final settlement.
+                            </p>
+                            <br/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <record id="action_employee_retrun_assets_pdf" model="ir.actions.report">
+            <field name="name">Employee Asset Return Form</field>
+            <field name="model">hr.employee</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">asset_management.assets_return_report</field>
+            <field name="report_file">asset_management.assets_return_report</field>
+            <field name="binding_model_id" ref="hr.model_hr_employee_public"/>
+            <field name="print_report_name">Asset Return Form</field>
+            <field name="paperformat_id" ref="asset_management.paperformat_return_asset"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

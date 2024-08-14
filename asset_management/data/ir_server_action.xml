@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.server" id="action_asset_req_admin_approval">
+        <field name="name">Admin Approval</field>
+        <field name="model_id" ref="model_asset_request"/>
+        <field name="binding_model_id" ref="model_asset_request"/>
+        <field name="groups_id" eval="[(4, ref('asset_management.asset_admin_group'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            records.action_approve()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_asset_maintenance_req_admin_approval">
+        <field name="name">Admin Approval</field>
+        <field name="model_id" ref="model_maintenance_request"/>
+        <field name="binding_model_id" ref="model_maintenance_request"/>
+        <field name="groups_id" eval="[(4, ref('asset_management.asset_admin_group'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            records.action_approve()
+        </field>
+    </record>
+    <record model="ir.actions.server" id="action_free_allocated_asset_approval">
+        <field name="name">Free Asset</field>
+        <field name="model_id" ref="model_maintenance_equipment"/>
+        <field name="binding_model_id" ref="model_maintenance_equipment"/>
+        <field name="groups_id" eval="[(4, ref('asset_management.asset_admin_group'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            records.free_allocated_asset()
+        </field>
+    </record>
+</odoo>

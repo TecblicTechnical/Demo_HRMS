@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="job_position_report_form_view" model="ir.ui.view">
+        <field name="name">job.position.report.form.view</field>
+        <field name="model">job.position.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_xls_job_position_report" string="Print XLS" type="object" class="btn-primary"/>
+                    <button name="print_pdf_job_position_report" string="Print PDF" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_job_position_report" model="ir.actions.act_window">
+        <field name="name">Job Position Report</field>
+        <field name="res_model">job.position.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="job_position_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

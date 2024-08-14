@@ -1,0 +1,52 @@
+<odoo>
+    <record id="ast_group_hr_public_employee_button_id" model="ir.ui.view">
+        <field name="name">Custom.change.group.hr.public.employee.button</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(maintenance.hr_equipment_action)d"
+                        context="{'search_default_employee_id': id, 'default_employee_id': id, 'create': 0, 'edit': 0, 'delete': 0}"
+                        class="o_stat_button"
+                        icon="fa-cubes"
+                        type="action">
+                    <field name="equipment_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook[last()]" position="inside">
+                <page id="equipment_page_id"
+                      string="Equipment" invisible="1">
+                    <field name="all_equipment_received" invisible="1"/>
+                    <field name="hide_return_button" invisible="1"/>
+                    <field name="equipment_ids" widget="one2many_list"
+                           options="{'no_edit': True, 'no_create': True,'no_open': True}">
+                        <tree>
+                            <field name="name"/>
+                            <field name="assign_date"/>
+                            <field name="password_of_device"/>
+                            <field name="sequence"/>
+                            <field name="serial_no"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="return_allocated_assets"
+                        type="object" class="btn-primary" attrs="{'invisible': ['|',('equipment_count', '=', 0),('hide_return_button', '=', True)]}"
+                        title="Return Assets" string="Return Assets"/>
+
+                <button name="employee_receive_asset_approval"
+                        type="object" class="btn-primary" attrs="{'invisible': ['|',('equipment_count', '=', 0),('all_equipment_received', '=', True)]}"
+                        title="Receive Assets" string="Receive Assets"  invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page id="Assets Detail" string="Assets Detail" invisible="1">
+                    <group>
+                        <field name="gmail_pswd"/>
+                        <field name="assets_return_date"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

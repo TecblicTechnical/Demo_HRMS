@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="generation_type_tree" model="ir.ui.view">
+            <field name="name">generation_type_tree</field>
+            <field name="model">generation.generation</field>
+            <field name="arch" type="xml">
+                <tree string="Generation type" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="generation_type_action" model="ir.actions.act_window">
+            <field name="name">Generation Type</field>
+            <field name="res_model">generation.generation</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="generation_type_menu"
+                  name="Generation"
+                  parent="maintenance.menu_maintenance_configuration"
+                  action="generation_type_action"
+                  groups="asset_management.asset_admin_group"
+        />
+    </data>
+</odoo>

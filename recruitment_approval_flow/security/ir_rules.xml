@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_applicant_interviewer_rule_manager" model="ir.rule">
+        <field name="name">Interviewer Officer Rule</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">[
+            '|', '|',
+            ('job_id.interviewer_ids', 'in', user.id),
+            ('interviewer_ids', 'in', user.id),('user_id', '=', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user'))]"/>
+    </record>
+    <record id="hr_applicant_interviewer_rule_admin" model="ir.rule">
+        <field name="name">Admin Interviewer Officer Rule</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+    </record>
+    <record id="hr_job_rule_admin" model="ir.rule">
+        <field name="name">Admin Job Officer Rule</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+    </record>
+    <record id="hr_job_rule_manager" model="ir.rule">
+        <field name="name">Job Officer Rule</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">[
+            '|', '|',
+            ('interviewer_ids', 'in', user.id),
+            ('user_id', '=', user.id),('create_uid','=',user.id)
+            ]</field>
+        <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <record id="ast_group_hr_employee_button_id" model="ir.ui.view">
+        <field name="name">Custom.change.group.hr.employee.button</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <field name="equipment_count" invisible="1"/>
+                <field name="all_equipment_received" invisible="1"/>
+                <field name="hide_return_button" invisible="1"/>
+                <page string="Assets Detail" invisible="1">
+                    <group>
+                        <field name="gmail_pswd"/>
+                        <field name="assets_return_date"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="allocate_assets_to_employee"
+                        type="object" class="btn-primary" groups="asset_management.asset_admin_group" attrs="{'invisible': ['|',('equipment_count', '=', 0),('hide_return_button','=',True)]}"
+                        title="Asset Allocation" string="Asset Allocation"/>
+                <button name="return_allocated_assets"
+                        type="object" class="btn-primary"  attrs="{'invisible': ['|',('equipment_count', '=', 0),('hide_return_button','=',True)]}"
+                        title="Return Assets" string="Return Assets"/>
+                <button name="employee_receive_asset_approval"
+                        type="object" class="btn-primary"  attrs="{'invisible': ['|',('equipment_count', '=', 0),('all_equipment_received', '=', True)]}"
+                        title="Receive Approval" string="Receive Assets" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

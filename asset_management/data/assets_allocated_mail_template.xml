@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="send_assets_allocated_mail" model="mail.template">
+            <field name="name">Asset Allocation</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="email_from">{{}}</field>
+            <field name="email_to">{{}}</field>
+            <field name="email_cc">{{}}</field>
+            <field name="subject">Asset Allocation</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello <t t-out="object.name"/>
+                        <br/>
+                        I am writing to confirm the allocation of assets.
+                        <br/>
+                        Below is the Attachment of the allocated assets:
+                        <br/>
+                        Thank you
+                        <br/>
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="asset_management.action_employee_equipment_issue_pdf"/>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="job_application_report_tmpl">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>table { width: 100%; text-align: center; } #application_data th, #application_data td { border:
+                            1px
+                            solid black; padding: 5px; } #application_data th h5 { font-weight: 700; }
+                        </style>
+                        <center>
+                            <div>
+                                <h3 style="font-size:25px !important;font-weight: 700;">
+                                    Job Application Report (
+                                    <t t-esc="data['date_range']"/>
+                                    )
+                                </h3>
+                            </div>
+                            <br/>
+                            <div>
+                                <br/>
+                                <br/>
+                                <table id="application_data">
+                                    <tr>
+                                        <th style="width:20px;">
+                                            <h5>Create Date</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Subject</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Applicant's Name</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Email</h5>
+                                        </th>
+                                        <th>
+                                            <h5>LinkedIn Profile</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Degree</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Mobile</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Applied Job</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Status</h5>
+                                        </th>
+                                    </tr>
+                                    <tr t-foreach='data["application_list"]' t-as="application">
+                                        <td>
+                                            <h5>
+                                                <t t-esc="application.create_date.strftime('%Y-%m-%d')"/>
+<!--                                                <span t-field="application.create_date.strftime('%Y-%m-%d')"/>-->
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.partner_name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.email_from"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.linkedin_profile"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.type_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.partner_mobile"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.job_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="application.stage_id.name"/>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+                            </div>
+                        </center>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_job_application_report" model="report.paperformat">
+            <field name="name">Job Application</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">48</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_job_application_pdf_reports" model="ir.actions.report">
+            <field name="name">JOB Application PDF Report</field>
+            <field name="model">job.application.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">recruitment_approval_flow.job_application_report_tmpl</field>
+            <field name="report_file">recruitment_approval_flow.job_application_report_tmpl</field>
+            <field name="binding_model_id" ref="model_job_application_report"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_job_application_report"/>
+        </record>
+
+    </data>
+</odoo>
