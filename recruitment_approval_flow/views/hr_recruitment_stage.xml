@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="hr_recruitment_stage_form_view_inherits" model="ir.ui.view">
+        <field name="name">hr recruitment stage form view</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="active" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_stage_tree_view_inherits" model="ir.ui.view">
+        <field name="name">hr recruitment stage tree view</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="active" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_stage_search_view_inherits" model="ir.ui.view">
+        <field name="name">hr recruitment stage search view</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="arch" type="xml">
+             <search>
+                 <group expand="1" string="Group By">
+                    <filter name="active" string="Archive" domain="[('active','=',True)]" help="Show active stage"/>
+                    <filter name="inactive" string="Unarchive" domain="[('active','=',False)]" help="Show inactive stage"/>
+                 </group>
+            </search>
+        </field>
+    </record>
+</odoo>

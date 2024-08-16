@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hired_id" model="hr.recruitment.stage">
+            <field name="name">Hired</field>
+            <field name="hired_stage">True</field>
+        </record>
+    </data>
+</odoo>
