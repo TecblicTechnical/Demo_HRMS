@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_missing_attendance_tree" model="ir.ui.view">
+        <field name="name">missing.attendance.tree</field>
+        <field name="model">missing.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Missing attendances">
+                <field name="employee_id"/>
+                <field name="manager_id" invisible="1"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_missing_attendance_form" model="ir.ui.view">
+        <field name="name">missing.attendance.form</field>
+        <field name="model">missing.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Missing attendances">
+                <header>
+                    <button name="set_manager_approve" string="Send to Manager" states="draft" type="object"
+                            class="oe_highlight"/>
+                    <button name="set_hr_approve" attrs="{'invisible':['|',('approve_button_hide','=',True),('state','!=','manager_approval')]}" string="Approve And Send to HR"
+                            type="object" class="oe_highlight" groups="hr_employee_groups.main_manager_group,hr_employee_groups.main_admin_group"/>
+                    <button name="set_approved" states="hr_approval" string="Approve"  type="object" class="oe_highlight"  groups="hr_employee_groups.main_admin_group"/>
+                    <button name="set_reject" string="Reject" attrs="{'invisible':['|',('approve_button_hide','=',True),('state','not in',['manager_approval','hr_approval'])]}" type="object"
+                            class="oe_highlight" groups="hr_employee_groups.main_admin_group"/>
+                    <button name="set_reset_to_draft" string="Reset To Draft" states="reject,approved" type="object"
+                            class="oe_highlight" groups="hr_employee_groups.main_admin_group"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,manager_approval,hr_approval,approved"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1" readonly="0"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="manager_id" invisible="1"/>
+                            <field name="approve_button_hide" invisible="1"/>
+                            <field name="request_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="start_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" attrs="{'readonly':[('state','!=','draft')]}" required="1"/>
+                    </group>
+                    <notebook>
+                        <page name="attendance_details" string="Attendance Details">
+                            <field name="attendance_ids" readonly="1" force_save="1">
+                                <tree editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="check_in"/>
+                                    <field name="check_out"/>
+<!--                                    <field name="is_half_day"/>-->
+                                    <field name="worked_hours"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="history" string="Attendance History">
+
+                            <field
+                                    name="attendance_history_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree,kanban"
+                                    readonly="1"
+                                    force_save="1"
+                            >
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="check_in"/>
+                                    <field name="check_out"/>
+                                    <field name="worked_hours"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter" name="oe_chatter">
+                    <field name="message_follower_ids" id="message_follower_ids"/>
+                    <field name="message_ids" id="message_ids"/>
+                    <field name="activity_ids" id="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="missing_attendance_search_view" model="ir.ui.view">
+        <field name="name">missing.attendance.search.view</field>
+        <field name="model">missing.attendance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="note"/>
+                <!-- <field name="manager_id"/> -->
+                <filter domain="[('state','=','draft')]" string="In Draft" name="indraft"/>
+                <filter domain="[('state', '=', 'manager_approval')]" string="Need Manager Approval"
+                        name="manager_approval"/>
+                <filter domain="[('state', '=', 'hr_approval')]" string="Need HR Approval" name="hr_approval"/>
+                <filter string="Approved Missing Attendances" domain="[('state', '=', 'approved')]" name="validated"/>
+                <separator/>
+                <filter string="My Missing Attendances" name="my_leaves" domain="[('employee_id.user_id', '=', uid)]"/>
+                <filter name="filter_date_from" date="start_date"/>
+                <separator/>
+                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                 <filter string="Unarchived" name="inactive" domain="[('active', '=', True)]"/>
+                 <separator/>
+                <group string="Group By">
+                    <filter name="group_employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="group_type" string="Request Type" context="{'group_by':'request_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_manager" string="Manager" context="{'group_by': 'manager_id'}"/>
+                    <separator/>
+                    <filter name="group_date_from" string="Start Date" context="{'group_by':'start_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="missing_attendance_action" model="ir.actions.act_window">
+        <field name="name">Missing Attendances</field>
+        <field name="context">{'search_default_group_date_from': 1}</field>
+        <field name="res_model">missing.attendance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No missing attendance records found
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="missing_attedence_manager_approval">
+        <field name="name">Manager Approval</field>
+        <field name="model_id" ref="model_missing_attendance"/>
+        <field name="binding_model_id" ref="model_missing_attendance"/>
+        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_admin_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+             records.set_hr_approve()
+
+        </field>
+    </record>
+    <record model="ir.actions.server" id="missing_attedence_hr_approval">
+        <field name="name">HR Approval</field>
+        <field name="model_id" ref="model_missing_attendance"/>
+        <field name="binding_model_id" ref="model_missing_attendance"/>
+        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_admin_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.set_approved()
+
+        </field>
+    </record>
+
+
+    <menuitem id="menu_missing_attendance_root" name="Missing Attendances" sequence="90"/>
+
+    <menuitem id="menu_missing_attendance_menu" action="missing_attendance_action"
+              name="Missing Attendances" parent="missing_attendance.menu_missing_attendance_root" sequence="1"/>
+
+</odoo>

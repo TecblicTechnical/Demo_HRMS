@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="my_attendance_action" model="ir.actions.act_window">
+        <field name="name">My Attendances</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+    </record>
+
+    <record id="view_hr_employee_public_form_inherit_attendance" model="ir.ui.view">
+        <field name="name">view.hr.employee.public.form.inherit.attendance</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="action" name="%(missing_attendance.my_attendance_action)d"
+                        icon="fa-calendar">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Attendance</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_my_attendance_menu" action="my_attendance_action"
+              name="My Attendances" parent="missing_attendance.menu_missing_attendance_root" sequence="2"/>
+    <menuitem id="my_attendances_menu" action="my_attendance_action"
+              name="My Attendances" parent="hr_attendance.menu_hr_attendance_root" sequence="3"/>
+</odoo>

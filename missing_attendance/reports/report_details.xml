@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_attendance_details_new_doc">
+            <t t-call="web.basic_layout">
+<!--            <t t-call="web.external_layout">-->
+                <div class="page">
+                    <style>table { width: 100%; text-align: center; } #project_data th, #project_data td { border: 1px
+                        solid black; width:20%;padding:5px;} #project_data th h5 { font-weight: 700; }
+                    </style>
+                    <div class="oe_structure"/>
+                     <center>
+                    <div class="text-center">
+
+                        <h2>Missing Attendance Details</h2>
+                    </div>
+                    </center>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td style="font-weight :bold;">From Date</td>
+                            <td class="text-center">:</td>
+                            <td class="text-center">
+                                <t t-esc="o.start_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight :bold;">To Date</td>
+                            <td class="text-center">:</td>
+                            <td class="text-center">
+                                <t t-esc="o.end_date"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-bordered" id="project_data">
+                        <thead bg-color="gray">
+                            <tr>
+                                <th class="text-center">
+                                    <span>Employee Name</span>
+                                </th>
+
+                                <th class="text-center">
+                                    <span>Date</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Description</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Status</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.get_attendance().values()" t-as="rec">
+                                <tr>
+                                    <td>
+                                        <span t-esc="rec['emp_name']"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="rec['date']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec['desc']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec['status']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+<!--            </t>-->
+        </t>
+    </template>
+    
+    
+    <template id="report_attendance_details_new">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="missing_attendance.report_attendance_details_new_doc"/>
+            </t>
+        </t>
+    </template>
+</odoo>
+

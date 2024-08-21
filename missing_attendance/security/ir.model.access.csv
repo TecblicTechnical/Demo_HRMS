@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+missing_attendance_id,missing_attendance_name,model_missing_attendance,,1,1,1,1
+access_missing_attendance_history,access_missing_attendance_history,model_missing_attendance_history,,1,1,1,1
+access_attendance_request_report_id,access_attendance_request_report_name,model_attendance_request_report,,1,1,1,1
