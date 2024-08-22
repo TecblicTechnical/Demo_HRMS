@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_attendance_details_new_doc">
-            <t t-call="web.basic_layout">
-<!--            <t t-call="web.external_layout">-->
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <!--            <t t-call="web.external_layout">-->
                 <div class="page">
                     <style>table { width: 100%; text-align: center; } #project_data th, #project_data td { border: 1px
                         solid black; width:20%;padding:5px;} #project_data th h5 { font-weight: 700; }
                     </style>
                     <div class="oe_structure"/>
                      <center>
-                    <div class="text-center">
-
-                        <h2>Missing Attendance Details</h2>
+                    <div class="text-center" >
+                        <h2 style="font-size:25px !important;font-weight: 700; color:black;">Missing Attendance Details (<t t-esc="o.start_date"/> to  <t t-esc="o.end_date"/>)</h2>
                     </div>
                     </center>
-                    <table class="table table-bordered">
-                        <tr>
-                            <td style="font-weight :bold;">From Date</td>
-                            <td class="text-center">:</td>
-                            <td class="text-center">
-                                <t t-esc="o.start_date"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight :bold;">To Date</td>
-                            <td class="text-center">:</td>
-                            <td class="text-center">
-                                <t t-esc="o.end_date"/>
-                            </td>
-                        </tr>
-                    </table>
+                    <br/>
                     <br/>
                     <table class="table table-bordered" id="project_data">
                         <thead bg-color="gray">
@@ -71,6 +56,7 @@
                     </table>
                 </div>
 <!--            </t>-->
+            </t>
         </t>
     </template>
     

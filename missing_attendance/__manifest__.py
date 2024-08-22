@@ -11,7 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/mail_template.xml',
-        'data/rules.xml',
+        'security/rules.xml',
         'reports/report_details.xml',
         'reports/report.xml',
         'views/missing_attendance_views.xml',

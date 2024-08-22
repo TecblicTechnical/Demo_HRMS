@@ -15,7 +15,8 @@
                     </group>
                 </sheet>
                 <footer>
-                    <button name="print_report_new" type="object" string="Print" class="oe_highlight"/>
+                    <button name="print_report_xls" type="object" string="Print Xls" class="oe_highlight"/>
+                    <button name="print_report_new" type="object" string="Print Pdf" class="oe_highlight"/>
                     <button special="cancel" string="Cancel"/>
                 </footer>
             </form>
