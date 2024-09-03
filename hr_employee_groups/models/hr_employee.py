@@ -109,6 +109,9 @@ class EmployeeInherit(models.Model):
     def employee_period_completion_mail_cron(self):
         employee_ids = self.env['hr.employee'].sudo().search(
             [('employee_period_type', 'in', ('trainee', 'probation'))])
+        users_in_group = self.env['res.users'].search([('groups_id.name', '=', 'HR')])
+        employees_in_group = users_in_group.mapped('employee_ids')
+        hr_emails = employees_in_group.mapped('work_email')
         for employee_id in employee_ids:
             if employee_id.completion_date == datetime.date.today():
                 if employee_id.employee_period_type == 'trainee':
@@ -127,8 +130,8 @@ class EmployeeInherit(models.Model):
                                  employee_id.completion_date) + '.' + '<br/> As he/she joined on ' + str(
                                  employee_id.joining_date) + " he will complete his/her " + str(
                                  employee_id.employee_period_duration) + ' month on the mentioned date.',
-                             'email_from': 'hr@tecblic.com',
-                             'email_to': 'hr@tecblic.com'
+                             'email_from': hr_emails,
+                             'email_to': hr_emails
                              }
                 mail_out = mail.create(mail_data)
                 mail_out.sudo().send()

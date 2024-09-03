@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="new_action_approve_group_in_manager" model="ir.ui.view">
+        <field name="name">Manager Approve Leaves</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='holiday_type']" position="before">
+                <field name="approve_button_hide" invisible="1"/>
+                <field name="check_manager" invisible="1"/>
+                <field name="can_approve" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_approve']" position="replace">
+                <button name="action_approve" string="Approve" class="oe_highlight" type="object"
+                        attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
+                    'confirm'),('approve_button_hide','=',True)]}" />
+            </xpath>
+            <xpath expr="//button[@name='action_validate']" position="replace">
+                <button name="action_validate" string="Validate" type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
+                    'validate1'),('approve_button_hide','=',True)]}" groups="employee_work_from_home.group_wfh_hr"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|','|',('check_manager' ,'=', True), ('state', 'not in', ['confirm','validate1','validate']),('approve_button_hide','=',True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_search_inherit" model="ir.ui.view">
+        <field name="name">hr_leave_search_inherit</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_search_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                 <separator/>
+             <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+             <filter string="Unarchived" name="active" domain="[('active', '=', True)]"/>
+             <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_approve_group_in_manager_view_tree_new" model="ir.ui.view">
+        <field name="name">Manager Approve Leaves Tree View</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='check_manger' invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="approve_button_hide" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_approve']" position="replace">
+                <button name="action_approve" string="Approve" icon="fa-thumbs-up" type="object"
+                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'!=',
+                    'confirm'),('approve_button_hide','=',True)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_validate']" position="replace">
+                <button name="action_validate" string="Validate" type="object" icon="fa-check"
+                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'!=',
+                    'validate1'),('approve_button_hide','=',True)]}" groups="employee_work_from_home.group_wfh_hr"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                <button name="action_refuse" string="Refuse" type="object" icon="fa-times"
+                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'not in',
+                ['confirm','validate1']),('approve_button_hide','=',True)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr.hr_employee_public_action" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">hr.employee.public</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="hr.hr_employee_public_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new employee
+            </p>
+            <p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+            </p>
+        </field>
+        <field name="domain">['|',('user_id','=',uid), ('parent_id.user_id','=',uid)]</field>
+    </record>
+</odoo>

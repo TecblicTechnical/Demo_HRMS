@@ -51,7 +51,7 @@
                         <br/>
                         <br/>
                         My self <t t-out="object.employee_id.name"/>, I have sent you a request for dates <t t-out="object.start_date.date()"/> to <t t-out="object.end_date.date()"/> about my missing attendance,
-                        when I was not able to punch in Biometrics due to reason mentioned <t t-out="object.note"/>.
+                        and reason is <t t-out="object.note"/>.
                         So, I request you to please approve my missing attendance request.
                         <br/>
                         <br/>

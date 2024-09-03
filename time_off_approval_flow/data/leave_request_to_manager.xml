@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <record id="employee_attendance_leave_request_mail" model="mail.template">
+            <field name="name">Send to Manager or Hr for leave Request</field>
+             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_to">{{}}</field>
+            <field name="subject">Leave Request!</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello Sir/Ma'am,
+                        <br/>
+                        My self <t t-out="object.employee_id.name"/>, I have sent you a Leave request for dates
+                        <t t-out="object.date_from.date()"/> to <t t-out="object.date_to.date()"/> and Reason is :
+                        <br/>
+                        <t t-out="object.name"/>,
+                        <br/>
+                        % set for_hr = ctx.get('for_hr', '')
+                        % set for_manager = ctx.get('for_manager', '')
+                        % if for_manager:
+                        <br/>
+                            As <t t-out="object.employee_id.name"/>'s manager is absent, we kindly request your assistance in reviewing and approving this leave request.
+                        <br/>
+                        % endif
+                        % if for_hr:
+                        <br/>
+                            As <t t-out="object.employee_id.name"/>'s manager is absent, we kindly request your assistance in reviewing and approving this leave request.
+                        <br/>
+                        % endif
+                        <br/>
+                        Thank you,
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>
