@@ -19,7 +19,7 @@
             <xpath expr="//button[@name='action_validate']" position="replace">
                 <button name="action_validate" string="Validate" type="object" class="oe_highlight"
                         attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
-                    'validate1'),('approve_button_hide','=',True)]}" groups="employee_work_from_home.group_wfh_hr"
+                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_admin_group"
                 />
             </xpath>
             <xpath expr="//button[@name='action_refuse']" position="replace">
@@ -52,7 +52,7 @@
         <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name='check_manger' invisible="1"/>
+                <field name='check_manager' invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='name']" position="before">
                 <field name="approve_button_hide" invisible="1"/>
@@ -60,18 +60,18 @@
 
             <xpath expr="//button[@name='action_approve']" position="replace">
                 <button name="action_approve" string="Approve" icon="fa-thumbs-up" type="object"
-                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'!=',
+                        attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
                     'confirm'),('approve_button_hide','=',True)]}"/>
             </xpath>
             <xpath expr="//button[@name='action_validate']" position="replace">
                 <button name="action_validate" string="Validate" type="object" icon="fa-check"
-                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'!=',
-                    'validate1'),('approve_button_hide','=',True)]}" groups="employee_work_from_home.group_wfh_hr"
+                        attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
+                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_admin_group"
                 />
             </xpath>
             <xpath expr="//button[@name='action_refuse']" position="replace">
                 <button name="action_refuse" string="Refuse" type="object" icon="fa-times"
-                        attrs="{'invisible':['|','|',('check_manger' ,'=', True),('state' ,'not in',
+                        attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'not in',
                 ['confirm','validate1']),('approve_button_hide','=',True)]}"
                 />
             </xpath>
