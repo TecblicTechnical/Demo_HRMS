@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_hr_leave_allocation_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.holidays.filter_allocations.inherit</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_leave_allocation_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="active" string="Active" domain="[('active','=',True)]" help="Show active allocation"/>
+                <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show inactive allocation"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_create_date" string="Created On" context="{'group_by':'create_date'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+     <record id="view_hr_leave_allocation_form_inherit" model="ir.ui.view">
+        <field name="name">hr.allocations.form.inherit</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <field name="active" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_leave_allocation_view_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.tree.inherit</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='holiday_status_id']" position="after">
+                <field name="create_date"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

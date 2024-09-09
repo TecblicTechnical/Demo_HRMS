@@ -19,7 +19,7 @@
             <xpath expr="//button[@name='action_validate']" position="replace">
                 <button name="action_validate" string="Validate" type="object" class="oe_highlight"
                         attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
-                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_admin_group"
+                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_hr_group"
                 />
             </xpath>
             <xpath expr="//button[@name='action_refuse']" position="replace">
@@ -66,7 +66,7 @@
             <xpath expr="//button[@name='action_validate']" position="replace">
                 <button name="action_validate" string="Validate" type="object" icon="fa-check"
                         attrs="{'invisible':['|','|',('check_manager' ,'=', True),('state' ,'!=',
-                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_admin_group"
+                    'validate1'),('approve_button_hide','=',True)]}" groups="hr_employee_groups.main_hr_group"
                 />
             </xpath>
             <xpath expr="//button[@name='action_refuse']" position="replace">

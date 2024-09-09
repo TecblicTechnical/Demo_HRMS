@@ -18,7 +18,7 @@ class MissingAttendance(models.Model):
 
     def domain_employee_id(self):
         employees = self.env['hr.employee'].sudo().search([('user_id', '=', self.env.user.id)])
-        if self.env.user.has_group('hr_employee_groups.main_admin_group'):
+        if self.env.user.has_group('hr_employee_groups.main_hr_group'):
             employees = self.env['hr.employee'].search([])
         else:
             if self.env.user.has_group('hr_employee_groups.main_manager_group'):
@@ -54,7 +54,7 @@ class MissingAttendance(models.Model):
         for rec in self:
             rec.approve_button_hide = False
             if self.env.user.employee_id.id == self.employee_id.id and not self.env.user.has_group(
-                    "hr_employee_groups.main_admin_group"):
+                    "hr_employee_groups.main_hr_group"):
                 rec.approve_button_hide = True
             if self.env.user.employee_id.id == self.employee_id.parent_id.id:
                 rec.approve_button_hide = False
@@ -186,7 +186,7 @@ class MissingAttendance(models.Model):
 
     def set_hr_approve(self):
         is_manager = self.env.user.has_group('hr_employee_groups.main_manager_group')
-        is_hr = self.env.user.has_group('hr_employee_groups.main_admin_group')
+        is_hr = self.env.user.has_group('hr_employee_groups.main_hr_group')
         for record in self:
             if is_manager or is_hr and record.state == 'manager_approval':
                 record.write({'state': 'hr_approval'})
@@ -205,7 +205,7 @@ class MissingAttendance(models.Model):
         return True
 
     def set_approved(self):
-        is_hr = self.env.user.has_group('hr_employee_groups.main_admin_group')
+        is_hr = self.env.user.has_group('hr_employee_groups.main_hr_group')
         for record in self:
             if is_hr and record.state == 'hr_approval':
                 attendance_id = self.env['hr.attendance']
@@ -286,7 +286,7 @@ class MissingAttendance(models.Model):
 
     def unlink(self):
         error_message = _('You cannot delete a record which is not in draft state')
-        if self.user_has_groups('hr_employee_groups.main_admin_group'):
+        if self.user_has_groups('hr_employee_groups.main_hr_group'):
             return super(MissingAttendance, self).unlink()
         else:
             for rec in self:

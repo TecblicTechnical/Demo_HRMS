@@ -23,12 +23,12 @@
                     <button name="set_manager_approve" string="Send to Manager" states="draft" type="object"
                             class="oe_highlight"/>
                     <button name="set_hr_approve" attrs="{'invisible':['|',('approve_button_hide','=',True),('state','!=','manager_approval')]}" string="Approve And Send to HR"
-                            type="object" class="oe_highlight" groups="hr_employee_groups.main_manager_group,hr_employee_groups.main_admin_group"/>
-                    <button name="set_approved" states="hr_approval" string="Approve"  type="object" class="oe_highlight"  groups="hr_employee_groups.main_admin_group"/>
+                            type="object" class="oe_highlight" groups="hr_employee_groups.main_manager_group,hr_employee_groups.main_hr_group"/>
+                    <button name="set_approved" states="hr_approval" string="Approve"  type="object" class="oe_highlight"  groups="hr_employee_groups.main_hr_group"/>
                     <button name="set_reject" string="Reject" attrs="{'invisible':['|',('approve_button_hide','=',True),('state','not in',['manager_approval','hr_approval'])]}" type="object"
-                            class="oe_highlight" groups="hr_employee_groups.main_admin_group"/>
+                            class="oe_highlight" groups="hr_employee_groups.main_hr_group"/>
                     <button name="set_reset_to_draft" string="Reset To Draft" states="reject,approved" type="object"
-                            class="oe_highlight" groups="hr_employee_groups.main_admin_group"/>
+                            class="oe_highlight" groups="hr_employee_groups.main_hr_group"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,manager_approval,hr_approval,approved"/>
                 </header>
@@ -139,7 +139,7 @@
         <field name="name">Manager Approval</field>
         <field name="model_id" ref="model_missing_attendance"/>
         <field name="binding_model_id" ref="model_missing_attendance"/>
-        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_admin_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
+        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_hr_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
         <field name="state">code</field>
         <field name="code">
             if records:
@@ -151,7 +151,7 @@
         <field name="name">HR Approval</field>
         <field name="model_id" ref="model_missing_attendance"/>
         <field name="binding_model_id" ref="model_missing_attendance"/>
-        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_admin_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
+        <field name="groups_id" eval="[(4, ref('hr_employee_groups.main_hr_group')),(4, ref('hr_employee_groups.main_manager_group'))]"/>
         <field name="state">code</field>
         <field name="code">
             if records:

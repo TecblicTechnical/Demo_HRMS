@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="hr_holidays.menu_open_allocation" name="My Allocation Requests" active="False"/>
+    <menuitem
+            id="hr_holidays.hr_holidays_menu_manager_approve_allocations"
+            name="Allocations"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            action="hr_holidays.hr_leave_allocation_action_approve_department"
+            groups="hr_employee_groups.main_hr_group"
+            sequence="2"/>
+
+    <menuitem
+        id="hr_holidays.menu_hr_holidays_dashboard"
+        name="Everyone"
+        parent="hr_holidays.menu_hr_holidays_root"
+        groups="hr_employee_groups.main_hr_group"
+        sequence="2"
+        action="hr_holidays.action_hr_holidays_dashboard"/>
+
+    <menuitem
+        id="hr_holidays.menu_hr_holidays_approvals"
+        name="Approvals"
+        groups="hr_employee_groups.main_hr_group,hr_employee_groups.main_manager_group"
+        parent="hr_holidays.menu_hr_holidays_root"
+        sequence="3"/>
+
+    <menuitem
+            id="hr_holidays.menu_hr_holidays_my_leaves"
+            name="My Leaves"
+            parent="hr_holidays.menu_hr_holidays_root"
+            sequence="1"/>
+</odoo>

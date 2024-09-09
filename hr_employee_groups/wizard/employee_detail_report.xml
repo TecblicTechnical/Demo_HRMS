@@ -29,6 +29,6 @@
     </record>
 
     <menuitem id="menu_emp_detail_report" name="Employment Detail Report" parent="hr.hr_menu_hr_reports"
-         action="action_emp_detail_report" groups="hr_employee_groups.main_admin_group" sequence="2"/>
+         action="action_emp_detail_report" groups="hr_employee_groups.main_hr_group" sequence="2"/>
 
 </odoo>

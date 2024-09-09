@@ -29,6 +29,6 @@
     </record>
 
     <menuitem id="menu_emp_probation_report" name="Employment Type Report" parent="hr.hr_menu_hr_reports"
-         action="action_emp_probation_report" groups="hr_employee_groups.main_admin_group"/>
+         action="action_emp_probation_report" groups="hr_employee_groups.main_hr_group"/>
 
 </odoo>

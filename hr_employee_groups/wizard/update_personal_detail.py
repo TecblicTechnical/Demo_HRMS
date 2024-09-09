@@ -87,7 +87,7 @@ class UpdatePersonalDetails(models.TransientModel):
                         'personal_email_new': rec.email
 
                     })
-                    # hr = self.env['res.users'].sudo().search([]).filtered(lambda a: a.has_group('hr_employee_groups.main_admin_group'))
+                    # hr = self.env['res.users'].sudo().search([]).filtered(lambda a: a.has_group('hr_employee_groups.main_hr_group'))
                     # count = 1
                     # for i in hr:
                     #     print("i.........",i)

@@ -12,7 +12,7 @@ class HrLeave(models.Model):
 
     def check_is_manager(self):
         for rec in self:
-            is_self = rec.employee_id and rec.employee_id.user_id and rec.employee_id.user_id.id == rec.env.user.id and not self.env.user.has_group("hr_employee_groups.main_admin_group")
+            is_self = rec.employee_id and rec.employee_id.user_id and rec.employee_id.user_id.id == rec.env.user.id and not self.env.user.has_group("hr_employee_groups.main_hr_group")
             if is_self:
                 rec.check_manager = True
             else:
@@ -23,6 +23,8 @@ class HrLeave(models.Model):
         users_in_group = self.env['res.users'].sudo().search([('groups_id.name', '=', 'HR')])
         employees_in_group = users_in_group.mapped('employee_ids')
         hr_emails = employees_in_group.mapped('work_email')
+        print("hr_emails..............",hr_emails)
+
         template_values = {
             'email_cc': email,
             'email_to': hr_emails,
@@ -76,7 +78,7 @@ class HrLeave(models.Model):
     # def create(self, vals):
     #     res = super(HrLeave, self).create(vals)
     #     hr = self.env['res.users'].sudo().search([]).filtered(
-    #         lambda a: a.has_group('hr_employee_groups.main_admin_group'))
+    #         lambda a: a.has_group('hr_employee_groups.main_hr_group'))
     #     if res.employee_id.parent_id:
     #         start_time = datetime.combine(res.create_date.date(), res.create_date.min.time())
     #         end_time = datetime.combine(res.create_date.date(), res.create_date.max.time())
@@ -110,7 +112,7 @@ class HrLeave(models.Model):
 
         # Use sudo to ensure access to HR users
         hr = self.env['res.users'].sudo().search([]).filtered(
-            lambda a: a.has_group('hr_employee_groups.main_admin_group')
+            lambda a: a.has_group('hr_employee_groups.main_hr_group')
         )
 
         if res.employee_id.parent_id:

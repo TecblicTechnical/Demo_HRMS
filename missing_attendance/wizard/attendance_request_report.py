@@ -9,7 +9,7 @@ class AttendanceRequestReportNew(models.TransientModel):
 
     def domain_employee_id(self):
         employees = self.env['hr.employee'].sudo().search([('user_id', '=', self.env.user.id)])
-        if self.env.user.has_group('hr_employee_groups.main_admin_group'):
+        if self.env.user.has_group('hr_employee_groups.main_hr_group'):
             employees = self.env['hr.employee'].search([])
         else:
             if self.env.user.has_group('hr_employee_groups.main_manager_group'):
@@ -29,7 +29,7 @@ class AttendanceRequestReportNew(models.TransientModel):
         if self.employee_id:
             employees = Employee.browse(self.employee_id.id)
         else:
-            if self.env.user.has_group('hr_employee_groups.main_admin_group'):
+            if self.env.user.has_group('hr_employee_groups.main_hr_group'):
                 employees = Employee.sudo().search([])
             elif self.env.user.has_group('hr_employee_groups.main_manager_group'):
                 employees = Employee.sudo().search(['|', ('id', '=', self.env.user.employee_id.id),
@@ -112,7 +112,7 @@ class AttendanceRequestReportNew(models.TransientModel):
         if record.employee_id:
             employees = Employee.browse(record.employee_id.id)
         else:
-            if self.env.user.has_group('hr_employee_groups.main_admin_group'):
+            if self.env.user.has_group('hr_employee_groups.main_hr_group'):
                 employees = Employee.sudo().search([])
             elif self.env.user.has_group('hr_employee_groups.main_manager_group'):
                 employees = Employee.sudo().search(['|', ('id', '=', self.env.user.employee_id.id),
