@@ -5,9 +5,9 @@ import xlsxwriter
 import datetime
 
 
-class AssetMaintenanceRequestReport(models.TransientModel):
-    _name = 'asset.maintenance.request.report'
-    _description = 'Asset Maintenance Request Report'
+class EmployeeLeaveRequestReport(models.TransientModel):
+    _name = 'employee.leave.request.report'
+    _description = 'Employee Leave Request Report'
 
     date_from = fields.Date('From', required=True)
     date_to = fields.Date('To', required=True)
@@ -18,18 +18,18 @@ class AssetMaintenanceRequestReport(models.TransientModel):
         if self.date_to < self.date_from:
             raise ValidationError(_("To date should be greater than From date."))
 
-    def print_asset_maintenance_request_report_pdf(self):
-        return self.env.ref("asset_management.action_employee_asset_maintenance_request_pdf_reports").report_action(self)
+    def print_leave_request_report_pdf(self):
+        return self.env.ref("time_off_approval_flow.action_employee_leave_request_pdf_reports").report_action(self)
 
-    def print_maintenance_request_report_xls(self):
+    def print_leave_request_report_xls(self):
         return {
             'type': 'ir.actions.act_url',
-            'url': '/web/employee_maintenance_request_xlsx_report/%s' % (self.id),
+            'url': '/web/employee_leave_request_xlsx_report/%s' % (self.id),
             'target': 'new',
         }
 
-    def generate_emp_maintenance_request_report(self, id):
-        record = self.env['asset.maintenance.request.report'].sudo().search([('id', '=', id)])
+    def generate_emp_leave_request_report(self, id):
+        record = self.env['employee.leave.request.report'].sudo().search([('id', '=', id)])
 
         print("record.date_from..........", record.date_from)
         print("record.date_to..........", record.date_to)
@@ -67,35 +67,33 @@ class AssetMaintenanceRequestReport(models.TransientModel):
         merge_format.set_align('vcenter')
         cell_format_emp_details.set_bg_color('#b9bbb6')
 
-        worksheet.merge_range('B1:E1', "Employee Asset Request Sheet", merge_format)
+        worksheet.merge_range('B1:E1', "Employee Leave Request Sheet", merge_format)
         row += 1
 
         if record.employee_ids and (date_from and date_to):
-            asset_ids = self.env['maintenance.request'].sudo().search([('employee_id', 'in', record.employee_ids.ids), ('request_date', '>=', date_from), ('request_date', '<=', date_to)])
+            leave_ids = self.env['hr.leave'].sudo().search([('employee_ids', 'in', record.employee_ids.ids), ('request_date_from', '>=', date_from), ('request_date_to', '<=', date_to)])
         else:
-            asset_ids = self.env['maintenance.request'].sudo().search([('request_date', '>=', date_from), ('request_date', '<=', date_to)])
+            leave_ids = self.env['hr.leave'].sudo().search([('request_date_from', '>=', date_from), ('request_date_to', '<=', date_to)])
 
         row += 1
         colm = 0
-        worksheet.write(row, colm, 'Request Date', cell_format_emp_details)
-        worksheet.write(row, colm + 1, 'Employee Name', cell_format_emp_details)
-        worksheet.write(row, colm + 2, 'Asset', cell_format_emp_details)
-        worksheet.write(row, colm + 3, 'Asset Sequence', cell_format_emp_details)
-        worksheet.write(row, colm + 4, 'Maintenance Request', cell_format_emp_details)
-        worksheet.write(row, colm + 5, 'Status', cell_format_emp_details)
+        worksheet.write(row, colm, 'Employee Name', cell_format_emp_details)
+        worksheet.write(row, colm + 1, 'Start Date', cell_format_emp_details)
+        worksheet.write(row, colm + 2, 'End Date', cell_format_emp_details)
+        worksheet.write(row, colm + 3, 'Description', cell_format_emp_details)
+        worksheet.write(row, colm + 4, 'Status', cell_format_emp_details)
         row += 1
         colm = 0
-        for ast in asset_ids:
-            formatted_date = ast.create_date.strftime('%Y-%m-%d')
-            state_string = ast._fields['state'].convert_to_export(ast.state, ast)
-
+        for rec in leave_ids:
+            formatted_date1 = rec.request_date_from.strftime('%Y-%m-%d')
+            formatted_date2 = rec.request_date_to.strftime('%Y-%m-%d')
+            state_string = rec._fields['state'].convert_to_export(rec.state, rec)
             worksheet.set_row(row, 40)
-            worksheet.write(row, colm, formatted_date or '', cell_format_normal)
-            worksheet.write(row, colm + 1, ast.employee_id.name or '', cell_format_normal)
-            worksheet.write(row, colm + 2, ast.equipment_id.name or '', cell_format_normal)
-            worksheet.write(row, colm + 3, ast.asset_seq or '', cell_format_normal)
-            worksheet.write(row, colm + 4, ast.name or '', cell_format_normal)
-            worksheet.write(row, colm + 5, state_string or '', cell_format_normal)
+            worksheet.write(row, colm, rec.employee_ids.name or '', cell_format_normal)
+            worksheet.write(row, colm + 1, formatted_date1 or '', cell_format_normal)
+            worksheet.write(row, colm + 2, formatted_date2 or '', cell_format_normal)
+            worksheet.write(row, colm + 3, rec.name or '', cell_format_normal)
+            worksheet.write(row, colm + 4, state_string or '', cell_format_normal)
             row = row + 1
         row = row + 2
         workbook.close()

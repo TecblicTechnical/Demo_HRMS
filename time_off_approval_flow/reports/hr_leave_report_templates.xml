@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_employee_leave_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>table { width: 100%; text-align: center; } #asset_data th, #asset_data td { border:
+                            1px
+                            solid black; padding: 5px; } #asset_data th h5 { font-weight: 700; }
+                        </style>
+                        <center>
+                            <div>
+                                <h3 style="font-size:25px !important;font-weight: 700;">
+                                    Leave Report (
+                                    <t t-esc="data['date_range']"/>
+                                    )
+                                </h3>
+                            </div>
+                            <br/>
+                            <div>
+                                <br/>
+                                <br/>
+                                <table id="asset_data">
+                                    <tr>
+                                        <th>
+                                            <h5>Employee Name</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Start Date</h5>
+                                        </th>
+                                        <th>
+                                            <h5>End Date</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Description</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Status</h5>
+                                        </th>
+                                    </tr>
+                                    <tr t-foreach='data["emp_leave_req_list"]' t-as="rec">
+                                        <td>
+                                            <h5>
+                                                <span t-field="rec.employee_id.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="rec.name"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="rec.request_date_from"/>
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                <span t-field="rec.request_date_to"/>
+                                            </h5>
+                                        </td>
+
+                                        <td>
+                                            <h5>
+                                                <span t-field="rec.state"/>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+                            </div>
+                        </center>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_leave_request_report" model="report.paperformat">
+            <field name="name">Employee Leave Paperformat</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">48</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_employee_leave_request_pdf_reports" model="ir.actions.report">
+            <field name="name">Employee Leave Request PDF Report</field>
+            <field name="model">employee.leave.request.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">time_off_approval_flow.report_employee_leave_template</field>
+            <field name="report_file">time_off_approval_flow.report_employee_leave_template</field>
+            <field name="binding_model_id" ref="model_employee_leave_request_report"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_leave_request_report"/>
+        </record>
+
+    </data>
+</odoo>

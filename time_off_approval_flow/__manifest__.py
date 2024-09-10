@@ -8,10 +8,13 @@
     'depends': ['base','hr','hr_holidays','hr_employee_groups'],
     'license': 'LGPL-3',
     'data': [
+        'security/ir.model.access.csv',
         'security/ir_rules.xml',
         'data/leave_request_to_manager.xml',
+        'reports/hr_leave_report_templates.xml',
         'views/hr_leave.xml',
         'views/hr_allocation.xml',
+        'wizard/emp_leave_request_report.xml',
         'views/menu.xml',
     ],
 }

@@ -29,4 +29,8 @@
             name="My Leaves"
             parent="hr_holidays.menu_hr_holidays_root"
             sequence="1"/>
+
+    <menuitem id="menu_employee_leave_report" name="Leave Report" parent="hr_holidays.menu_hr_holidays_report" action="action_leave_request_report" groups="hr_employee_groups.main_hr_group" sequence="4"/>
+
+
 </odoo>

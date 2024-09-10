@@ -76,12 +76,13 @@ class AssetRequestReport(models.TransientModel):
         colm = 0
         for ast in asset_ids:
             formatted_date = ast.create_date.strftime('%Y-%m-%d')
+            state_string = ast._fields['state'].convert_to_export(ast.state, ast)
 
             worksheet.set_row(row, 40)
             worksheet.write(row, colm, formatted_date or '', cell_format_normal)
             worksheet.write(row, colm + 1, ast.employee_id.name or '', cell_format_normal)
             worksheet.write(row, colm + 2, ast.name or '', cell_format_normal)
-            worksheet.write(row, colm + 3, ast.state or '', cell_format_normal)
+            worksheet.write(row, colm + 3, state_string or '', cell_format_normal)
             row = row + 1
         row = row + 2
         workbook.close()
