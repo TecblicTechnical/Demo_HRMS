@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="expense_hr_employees_public_form_inherits" model="ir.ui.view">
+        <field name="name">expense.public.employee.form.inherits</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="expense_cost" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

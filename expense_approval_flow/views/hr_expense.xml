@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_expense_hr_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.expense.employee.form.inherit</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="employee_expense_cost" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='unit_amount'][2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('product_has_cost', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
